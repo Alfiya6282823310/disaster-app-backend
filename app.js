@@ -4,6 +4,7 @@ const cors = require("cors")
 const bcrypt = require("bcrypt")
 const jsonwebtoken = require("jsonwebtoken")
 const adminModel = require("./model/admin")
+const officerModel = require("./model/officer")
 
 const app = express()
 app.use(cors())
@@ -17,6 +18,16 @@ app.post("/adminSignUp", (req, res) => {
     input.password = hashedPassword
     console.log(input)
     let result = new adminModel(input)
+    result.save()
+    res.json({ "status": "success" })
+})
+//officer signup
+app.post("/officerSignUp", (req, res) => {
+    let input = req.body
+    let hashedPassword = bcrypt.hashSync(input.password, 10)
+    input.password = hashedPassword
+    console.log(input)
+    let result = new officerModel(input)
     result.save()
     res.json({ "status": "success" })
 })
