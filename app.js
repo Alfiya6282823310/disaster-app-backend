@@ -6,6 +6,7 @@ const jsonwebtoken = require("jsonwebtoken")
 const adminModel = require("./model/admin")
 const officerModel = require("./model/officer")
 const volunteerModel = require("./model/volunteer")
+const userModel = require("./model/user")
 
 const app = express()
 app.use(cors())
@@ -50,7 +51,7 @@ app.post("/adduser", (req, res) => {
     jwt.verify(token, "rescue-app",
         (error, decoded) => {
             if (decoded && decoded.email) {
-                let result = new peopleModel(input)
+                let result = new userModel(input)
                 result.save()
                 res.json({ "status": "success" })
             } else {
